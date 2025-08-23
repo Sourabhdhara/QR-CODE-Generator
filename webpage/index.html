@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QR Code Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f7;
+      text-align: center;
+      padding: 20px;
+    }
+    input, select, button {
+      margin: 8px;
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    canvas {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>QR Code Generator</h2>
+  <input type="text" id="data" placeholder="Enter data"><br>
+  <input type="number" id="boxSize" value="10" min="1" placeholder="Box Size"><br>
+  <input type="number" id="borderSize" value="1" min="0" placeholder="Border Size"><br>
+  <input type="text" id="fillColor" value="lightblue" placeholder="Fill Color"><br>
+  <input type="text" id="bgColor" value="black" placeholder="Background Color"><br>
+  <button onclick="generateQR()">Generate QR</button>
+  <button onclick="downloadQR()">Download PNG</button>
+  <br>
+  <canvas id="qrCanvas"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+  <script>
+    function generateQR() {
+      const data = document.getElementById('data').value;
+      const boxSize = parseInt(document.getElementById('boxSize').value);
+      const borderSize = parseInt(document.getElementById('borderSize').value);
+      const fillColor = document.getElementById('fillColor').value;
+      const bgColor = document.getElementById('bgColor').value;
+
+      const qr = qrcode(0, 'L');
+      qr.addData(data);
+      qr.make();
+
+      const canvas = document.getElementById('qrCanvas');
+      const ctx = canvas.getContext('2d');
+      const size = qr.getModuleCount();
+      const pixelSize = boxSize;
+      const totalSize = (size + borderSize * 2) * pixelSize;
+
+      canvas.width = canvas.height = totalSize;
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, totalSize, totalSize);
+
+      for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+          ctx.fillStyle = qr.isDark(row, col) ? fillColor : bgColor;
+          ctx.fillRect(
+            (col + borderSize) * pixelSize,
+            (row + borderSize) * pixelSize,
+            pixelSize,
+            pixelSize
+          );
+        }
+      }
+    }
+
+    function downloadQR() {
+      const canvas = document.getElementById('qrCanvas');
+      const link = document.createElement('a');
+      link.download = 'qr_code.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+  </script>
+</body>
+</html>
