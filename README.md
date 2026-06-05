@@ -1,4 +1,3 @@
-https://sourabhdhara.github.io/QR-CODE-Generator/
 # QR-CODE-Generator
 
 ## Overview
