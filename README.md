@@ -9,7 +9,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE/LICENSE.txt)
 
 <br/>
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QR Code Example" width="150" height="150"/>
+<img src="Screenshots/qr screen.png" alt="QR Code Example" width="150" height="150"/>
 <br/>
 
 **[🌐 Open Web Version](index.html)** • **[💻 Download Desktop App](#-3-desktop-executables-windows)** • **[🐍 Run Python Script](#-2-python-script)**
